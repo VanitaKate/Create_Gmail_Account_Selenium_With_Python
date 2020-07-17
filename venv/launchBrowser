@@ -1,0 +1,32 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+import time
+
+driver=webdriver.Chrome(executable_path="C:\Drivers\chromedriver.exe")
+#driver=webdriver.Firefox(executable_path='C:\Drivers\geckodriver.exe')
+driver.get("https://www.google.com/")
+print(driver.title)
+driver.find_element(By.PARTIAL_LINK_TEXT,"Gmail").click()
+driver.maximize_window()
+print(driver.title)
+time.sleep(3)
+driver.find_element(By.PARTIAL_LINK_TEXT,"Create an account").click()
+time.sleep(3)
+driver.maximize_window()
+windowHandles=driver.window_handles
+i=0
+for Handle in windowHandles:
+    print ("value of window ", i, "is:", Handle)
+    i=i+1
+print(driver.title)
+driver.switch_to.window(Handle)
+print("Header of create account page is: ", driver.find_element(By.XPATH,"//h1[contains(text(),'Create your Google Account')]").is_displayed())
+print( driver.find_element(By.XPATH,"//h1[contains(text(),'Create your Google Account')]").text)
+driver.find_element(By.NAME,"firstName").send_keys("Vanita")
+driver.find_element(By.NAME,"lastName").send_keys("Kate")
+driver.find_element(By.NAME,"Username").send_keys("VK1")
+driver.find_element(By.NAME,"Passwd").send_keys("India@123")
+driver.find_element(By.NAME,"ConfirmPasswd").send_keys("India@123")
+driver.find_element(By.XPATH,"//span[contains(text(),'Next')]").click()
+time.sleep(4)
